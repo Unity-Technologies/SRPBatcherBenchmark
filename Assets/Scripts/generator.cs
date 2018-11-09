@@ -64,7 +64,8 @@ public class generator : MonoBehaviour
                     rend.material = new Material(m_material[mat]);
                     Color col = Color.HSVToRGB(((float)(id * 10) / (float)total) % 1.0f, 0.7f, 1.0f);
                     //                Color col = Color.HSVToRGB(Random.Range(0.0f,1.0f), 1.0f, 1.0f);
-                    rend.material.SetColor("_Color", col);
+                    rend.material.SetColor("_Color", col);              // set for LW
+                    rend.material.SetColor("_BaseColor", col);          // set for HD
                 }
 
                 id++;
