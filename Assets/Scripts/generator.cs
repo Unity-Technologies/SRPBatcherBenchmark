@@ -9,6 +9,8 @@ public class generator : MonoBehaviour
     public int m_w;
     public int m_h;
     public bool m_sameMaterial;
+    public bool m_castShadows = true;
+    public bool m_receiveShadows = true;
 
     private Vector3[] m_pos;
     private GameObject[] m_objs;
@@ -40,9 +42,18 @@ public class generator : MonoBehaviour
 
                 m_objs[id] = GameObject.CreatePrimitive(t);
 
+                Collider collider = m_objs[id].GetComponent<Collider>();
+                DestroyImmediate(collider);
+
                 m_pos[id] = new Vector3(x - (float)m_w * 0.5f, 0, y - (float)m_h * 0.5f);
                 m_objs[id].transform.position = m_pos[id];
                 Renderer rend = m_objs[id].GetComponent<Renderer>();
+
+                rend.lightProbeUsage = UnityEngine.Rendering.LightProbeUsage.Off;
+                rend.reflectionProbeUsage = UnityEngine.Rendering.ReflectionProbeUsage.Off;
+
+                rend.shadowCastingMode = m_castShadows ? UnityEngine.Rendering.ShadowCastingMode.On : UnityEngine.Rendering.ShadowCastingMode.Off;
+                rend.receiveShadows = m_receiveShadows;
 
                 if (m_sameMaterial)
                 {

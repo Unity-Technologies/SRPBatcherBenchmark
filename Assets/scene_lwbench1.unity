@@ -88,7 +88,6 @@ LightmapSettings:
     m_PVRFilteringAtrousPositionSigmaIndirect: 2
     m_PVRFilteringAtrousPositionSigmaAO: 1
     m_ShowResolutionOverlay: 1
-    m_ExportTrainingData: 0
   m_LightingDataAsset: {fileID: 0}
   m_UseShadowmask: 1
 --- !u!196 &4
@@ -705,7 +704,8 @@ MonoBehaviour:
   m_w: 40
   m_h: 40
   m_sameMaterial: 0
-  m_sameTexture: 0
+  m_castShadows: 1
+  m_receiveShadows: 1
 --- !u!4 &1856685543
 Transform:
   m_ObjectHideFlags: 0

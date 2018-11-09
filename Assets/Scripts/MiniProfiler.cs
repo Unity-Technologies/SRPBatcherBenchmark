@@ -11,7 +11,7 @@ namespace UnityEngine.Experimental.Rendering
     {
         public Font m_font;
 
-        private bool m_Enable = false;
+        private bool m_Enable = true;
         private const float kAverageStatDuration = 1.0f;            // stats refresh each second
         private int m_frameCount;
 		private float m_AccDeltaTime;
@@ -163,9 +163,9 @@ namespace UnityEngine.Experimental.Rendering
                 float w = 700, h = 256;
 
                 if ( SRPBatcher )
-                    GUILayout.BeginArea(new Rect(32, 50, w, h), "(SRP batcher ON)", GUI.skin.window);
+                    GUILayout.BeginArea(new Rect(32, 50, w, h), "SRP batcher ON (F9)", GUI.skin.window);
                 else
-                    GUILayout.BeginArea(new Rect(32, 50, w, h), "(SRP batcher OFF)", GUI.skin.window);
+                    GUILayout.BeginArea(new Rect(32, 50, w, h), "SRP batcher OFF (F9)", GUI.skin.window);
 
                 GUILayout.Label(m_statsLabel, m_style);
 
