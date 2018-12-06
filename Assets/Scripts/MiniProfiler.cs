@@ -89,19 +89,29 @@ namespace UnityEngine.Experimental.Rendering
             RazCounters();
         }
 
+        void ToggleSRPBatcher()
+        {
+            GraphicsSettings.useScriptableRenderPipelineBatching = !GraphicsSettings.useScriptableRenderPipelineBatching;
+            ResetStats();
+        }
+        
+        void ToggleStats()
+        {
+            m_Enable = !m_Enable;
+            ResetStats();
+        }
+
         void Update()
         {
 
             if (Input.GetKeyDown(KeyCode.F9))
             {
-                GraphicsSettings.useScriptableRenderPipelineBatching = !GraphicsSettings.useScriptableRenderPipelineBatching;
-                ResetStats();
+                ToggleSRPBatcher();
             }
 
             if (Input.GetKeyDown(KeyCode.F8))
             {
-                m_Enable = !m_Enable;
-                ResetStats();
+                ToggleStats();
             }
 
 			if (m_Enable)
@@ -155,12 +165,14 @@ namespace UnityEngine.Experimental.Rendering
 
         void OnGUI()
         {
+            float offset = 50;
             if (m_Enable)
             {
                 bool SRPBatcher = GraphicsSettings.useScriptableRenderPipelineBatching;
 
                 GUI.color = new Color(1, 1, 1, 1);
                 float w = 700, h = 256;
+                offset += h + 50;
 
                 if ( SRPBatcher )
                     GUILayout.BeginArea(new Rect(32, 50, w, h), "SRP batcher ON (F9)", GUI.skin.window);
@@ -170,6 +182,16 @@ namespace UnityEngine.Experimental.Rendering
                 GUILayout.Label(m_statsLabel, m_style);
 
                 GUILayout.EndArea();
+            }
+
+            if (GUI.Button(new Rect(32, offset, 150, 150), "Toggle batcher"))
+            {
+                ToggleSRPBatcher();
+            }
+
+            if (GUI.Button(new Rect(32 + 150 + 32, offset, 150, 150), "Toggle stats"))
+            {
+                ToggleStats();
             }
         }
     }
