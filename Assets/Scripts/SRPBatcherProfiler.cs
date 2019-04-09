@@ -20,6 +20,7 @@ namespace UnityEngine.Experimental.Rendering
         internal class RecorderEntry
         {
             public string name;
+            public string oldName;
             public int callCount;
             public float accTime;
             public Recorder recorder;
@@ -44,8 +45,8 @@ namespace UnityEngine.Experimental.Rendering
 			// Warning: Keep that list in the exact same order than SRPBMarkers enum
             new RecorderEntry() { name="RenderLoop.Draw" },
             new RecorderEntry() { name="Shadows.Draw" },
-            new RecorderEntry() { name="RenderLoopNewBatcher.Draw" },
-            new RecorderEntry() { name="ShadowLoopNewBatcher.Draw" },
+            new RecorderEntry() { name="SRPBatcher.Draw", oldName="RenderLoopNewBatcher.Draw" },
+            new RecorderEntry() { name="SRPBatcherShadow.Draw", oldName="ShadowLoopNewBatcher.Draw" },
             new RecorderEntry() { name="RenderLoopDevice.Idle" },
             new RecorderEntry() { name="StdRender.ApplyShader" },
             new RecorderEntry() { name="StdShadow.ApplyShader" },
@@ -61,6 +62,12 @@ namespace UnityEngine.Experimental.Rendering
                 var sampler = Sampler.Get(recordersList[i].name);
                 if (sampler.isValid)
                     recordersList[i].recorder = sampler.GetRecorder();
+				else if ( recordersList[i].oldName != null )
+				{
+					sampler = Sampler.Get(recordersList[i].oldName);
+					if (sampler.isValid)
+						recordersList[i].recorder = sampler.GetRecorder();
+				}
             }
 
             m_style =new GUIStyle();
